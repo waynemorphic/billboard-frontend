@@ -1,5 +1,5 @@
-import "./styles.css";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import axios from "axios";
 import Post from "./components/card/Post";
 
 // Message component
@@ -26,22 +26,27 @@ import Post from "./components/card/Post";
 // };
 
 export default function App() {
-  const [post, setPost] = useState([
-    {
-      // username: "Tyler Perry",
-      message: "We are here for sure",
-      bitcoinAddress: "ghyhy",
-      bitcoinAmount: 0.00067,
-      paymentStatus: "paid"
-    }
-  ]);
+  const [post, setPost] = useState([]);
   // const [newUsername, setUsername] = useState()
   const [newMessage, setMessage] = useState('');
   const [newBTCAddress, setBTCAddress] = useState('');
   const [newBTCAmount, setBTCAmount] = useState('');
   const [newPaymentStatus, setPaymentStatus] = useState('');
   const [showMessage, setShowMessage] = useState(Math.max(post.map(i => parseFloat(i.bitcoinAmount))))
-  console.log("",post.map(i => parseFloat(i.bitcoinAmount)))
+  // console.log("",post.map(i => parseFloat(i.bitcoinAmount)))
+
+  // fetch data from the server
+  const hook = () => {
+    axios
+      .get('http://localhost:3002/post')
+      .then(response => {
+        setPost(response.data)
+    })
+  }
+
+  useEffect(hook, [])
+
+  console.log('render', post.length, 'post')
 
   // event handler for onSubmit event on MessageForm component
   const handleMessageSubmit = (event) => {
@@ -55,6 +60,19 @@ export default function App() {
       paymentStatus: newPaymentStatus
     };
 
+    
+    axios
+      .post('http://localhost:3002/post', messageObject)
+      .then(response => {
+        console.log(response.data)
+        setPost(post.concat(response.data))
+        setBTCAmount(currentAmmount);
+        setMessage('');
+        setBTCAddress('');    
+        setPaymentStatus('');
+    })
+    
+
     // an array of all amounts entered
     const amountArray = post.map(i => parseFloat(i.bitcoinAmount))
     // const maxAmount = amountArray.reduce((a,b) => Math.max(a, b), -Infinity)
@@ -62,14 +80,14 @@ export default function App() {
     const currentAmmount = newBTCAmount
 
     // condition checking max amount in array and the current value entered
-    if (currentAmmount > checkMax){
-      // console.log("wow", newBTCAmount > checkMax, newBTCAmount , checkMax)
-      setPost(post.concat(messageObject));
-      setBTCAmount(currentAmmount);
-      setMessage('');
-      setBTCAddress('');    
-      setPaymentStatus('');
-    }    
+    // if (currentAmmount > checkMax){
+    //   // console.log("wow", newBTCAmount > checkMax, newBTCAmount , checkMax)
+    //   setPost(post.concat(messageObject));
+    //   setBTCAmount(currentAmmount);
+    //   setMessage('');
+    //   setBTCAddress('');    
+    //   setPaymentStatus('');
+    // }    
   };
 
   // filters the objects to retrieve object with the maximum btc amount in the array
@@ -77,7 +95,7 @@ export default function App() {
   const messageToShow = showMessage
   ? post
   : post.filter((i) => i.bitcoinAmount < Math.max(...post.map(i => parseFloat(i.bitcoinAmount))))
-  console.log("message to show", messageToShow)
+  // console.log("message to show", messageToShow)
 
   // event handler for onchange event on MessageForm component
   const handleMessageChange = (event) => {
