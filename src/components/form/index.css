@@ -1,0 +1,62 @@
+.form-area {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-top: 50px;
+  }
+  
+  .form-area label {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  
+  .form-area input {
+    border-radius: 20px;
+    padding: 12px;
+    margin-top: 12px;
+  }
+  
+  .form-area textarea {
+    border-radius: 16px;
+    padding: 12px;
+    margin-top: 12px;
+  }
+  
+  .selection {
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .selection select {
+    margin: 10px 0;
+    text-align: center;
+    padding: 8px;
+    border-radius: 20px;
+    display: flex;
+    max-width: 100px;
+  }
+  
+  .selection option {
+    margin-left: 12px;
+    color: aqua;
+  }
+  
+  .post-btn {
+    padding: 12px;
+    width: fit-content;
+    align-self: center;
+    margin-top: 70px;
+    border-radius: 20px;
+    background-color: orange;
+  }
+  
+  .messageText .btc-header-image {
+    width: 10px;
+    
+  }
+  .messageText   .messageText-header{
+  text-align: left;
+  font-size: 0.8rem;
+  font-family: monospace;
+  }

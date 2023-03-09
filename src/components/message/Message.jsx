@@ -1,5 +1,5 @@
 import "../form/index.css"
-import btc from '../../assets/png/btc.png'
+import btc from '../../assets/btc.png'
 
 // Message component
 // Has the current state of the application
@@ -12,7 +12,7 @@ const Message = ({ post }) => {
   }
   return (
     <div className="messageText">
-      <h3><img src={btc} alt="BTC" className="btc-header-image" />Live Message</h3> 
+      <h3 className="messageText-header"><img src={btc} alt="BTC" className="btc-header-image" />Live Message</h3> 
       {post.map((i) => (
         <p key={post.indexOf(i)}>
           {i.message}
